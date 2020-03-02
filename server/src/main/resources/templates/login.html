@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>权限登录</title>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box" id="pmpapp" v-cloak>
+    <div class="form-group has-feedback">
+        <input type="text" class="form-control" v-model="username" placeholder="用户名">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+        <input type="password" class="form-control" v-model="password" placeholder="密码">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+    <div class="col-xs-4  btn-login">
+        <button type="button" class="btn btn-primary btn-block btn-flat btn-login" @click="login">登录</button>
+    </div>
+</div>
+<script src="${request.contextPath}/statics/libs/jquery.min.js"></script>
+<script src="${request.contextPath}/statics/libs/vue.min.js"></script>
+<script src="${request.contextPath}/statics/libs/bootstrap.min.js"></script>
+<script src="${request.contextPath}/statics/libs/jquery.slimscroll.min.js"></script>
+<script src="${request.contextPath}/statics/libs/fastclick.min.js"></script>
+<script src="${request.contextPath}/statics/libs/app.js"></script>
+<script type="text/javascript">
+var vm =new Vue({
+    el:'pmpapp',
+    data:{
+        username:'admin',
+        password:'debug'
+    },
+    methods:{
+    login:function (event) {
+        var data ="username="+vm.username+"&password="+vm.password;
+        $.ajax({
+            type:'get',
+            url:'sys/login',
+            data:data,
+            dataType:"json",
+            success:function (result) {
+                if(result.code=0){
+                    //登陆成功
+                    parent.location.href='index.html';
+                }else{
+                    alert("登录失败")
+                }
+            }
+        })
+    }
+    }
+})
+</script>
+</body>
+</html>
